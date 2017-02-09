@@ -1,5 +1,6 @@
 package anddd7.springboot.controller;
 
+import anddd7.springboot.domain.SysUser;
 import anddd7.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,10 @@ public class UserController {
     @RequestMapping("/welcome")
     @ResponseBody
     String welcomeUser(Long id) {
-        return "Welcome , " + userService.selectUser(id).getName() + " !";
+        SysUser user = userService.selectUser(id);
+        if (user == null) {
+            return "Sorry ,we don't find you in our white list";
+        }
+        return "Welcome , " + user.getName() + " !";
     }
-
 }
