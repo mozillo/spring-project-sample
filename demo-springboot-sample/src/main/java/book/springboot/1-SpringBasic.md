@@ -64,6 +64,8 @@
 * @Autowired Spring提供的注解
 * @Inject/@Resource JSR-330/JSR-250提供的注解
 
+## 配置
+
 ### JAVA配置
 @Configuration 表示这个类是一个配置类，等效于一个xml文件
 @Bean 注解一个方法，将方法返回值注册为一个bean
@@ -90,7 +92,68 @@ public class JavaConfig｛
 ｝
 ```
 
-* 配置AOP
+### 使用Aspectj实现AOP
+
+有两种方式，一个是监听方法（通过配置目标路径），一个是监听注解（在目标方法上放置特殊注解）
+```java
+/**
+ * Aop实现的地方
+ */
+@Aspect//声明一个切面
+@Component//托管给Spring容器
+public class AspectAopImpl {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * 注解式，通过检查注解位置来拦截
+     * AopAction是自定义的一个注解
+     
+       @Target(ElementType.METHOD)//用于方法
+       @Retention(RetentionPolicy.RUNTIME)//可用于运行时
+       @Documented
+       public @interface AopAction {
+           String name();
+       }
+       
+     */
+    @Pointcut("@annotation(demo.springboot.aop.impl.AopAction)")
+    public void annotationPointCut() {
+    }
+
+    @Before("annotationPointCut()")
+    public void logBefore() {
+        log.info("logBefore:现在时间是:" + new Date());
+    }
+
+
+    /**
+     * 通过指定拦截位置和具体方法
+     */
+    @Pointcut("execution(* demo.springboot.aop.impl.DemoMethodAopService.*(..))")
+    private void methodPointCut() {
+    }
+
+    @After("methodPointCut()")
+    public void logAfter() {
+        log.info("logAfter:现在时间是:" + new Date());
+    }
+}
+```
+
+### 启用AOP
+注入配置文件，开启AspectJ
+```java
+@Configuration
+@ComponentScan("demo.springboot.aop")//在Application入口整体扫描，可省略此行
+@EnableAspectJAutoProxy//开启Spring对AspectJ的支持
+public class AopConfiguration {
+}
+```
+替代以前的
+```xml
+    <!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+```
 
 
 
