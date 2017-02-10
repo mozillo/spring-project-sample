@@ -11,7 +11,8 @@
 
     <modules>
         <module>mybatis-springboot-sample</module>
-        <module>springboot-sample</module>
+        <module>configuration-springboot-sample</module>
+        <module>demo-springboot-sample</module>
     </modules>
 
     <!--官方推荐使用 spring-boot-starter-parent 包括一些预设配置:
