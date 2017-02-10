@@ -18,9 +18,8 @@ public class MapperScannerConfiguration {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         //获取之前注入的beanName为sqlSessionFactory的对象
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        //指定mapper接口的路径 ,批量加上@Mapper ,也可以手动加上 ,省略此配置
         //会触发 No MyBatis mapper was found in '[anddd7.springboot.controller, anddd7.springboot]' package.  警告
-        //mapperScannerConfigurer.setBasePackage("anddd7.springboot.dao");
+        mapperScannerConfigurer.setBasePackage("anddd7.springboot.dao");
         return mapperScannerConfigurer;
     }
 }
