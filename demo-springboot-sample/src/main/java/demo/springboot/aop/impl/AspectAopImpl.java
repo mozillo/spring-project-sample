@@ -34,7 +34,7 @@ public class AspectAopImpl {
     /**
      * 通过指定拦截位置和具体方法
      */
-    @Pointcut("execution(* demo.springboot.aop.impl.DemoMethodAopService.*(..))")
+    @Pointcut("execution(* demo.springboot.aop.service.DemoMethodAopService.*(..))")
     private void methodPointCut() {
     }
 
@@ -42,5 +42,4 @@ public class AspectAopImpl {
     public void logAfter() {
         log.info("logAfter:现在时间是:" + new Date());
     }
-
 }
