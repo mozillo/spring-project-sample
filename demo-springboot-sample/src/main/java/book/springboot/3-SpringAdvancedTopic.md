@@ -36,4 +36,79 @@ public class AwareService implements BeanNameAware, ResourceLoaderAware {
 ```
 
 ## 多线程
+* 注解需要异步执行(多线程)的方法
+```java
+@Service
+@Async //注解表明该方法是一个异步方法,注解在类上则表示类中所有方法都是异步的.
+public class AsyncTaskService {
+    public void executeAsyncTask(Integer i) {
+        System.out.println("执行异步任务：" + i);
+    }
 
+    public void executeAsyncTaskPlus(Integer i) {
+        System.out.println("执行异步任务+1：" + (i + 1));
+    }
+}
+```
+* 开启异步执行的方法,并定义异步执行器
+```java
+@Configuration
+@ComponentScan("demo.springboot.taskexecutor")
+@EnableAsync //使用@EnableAsync开启异步任务,实现异步配置类返回一个基于线程池的执行器
+public class ExecutorConfig implements AsyncConfigurer {
+    //重写替换系统获取的执行器
+    @Override
+    public Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(5);
+        taskExecutor.setMaxPoolSize(10);
+        taskExecutor.setQueueCapacity(25);
+        taskExecutor.initialize();
+        return taskExecutor;
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return null;
+    }
+
+    public static void main(String[] args){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ExecutorConfig.class);
+        AsyncTaskService asyncTaskService = context.getBean(AsyncTaskService.class);
+        /**
+         * 调用异步方法时,Spring会自动获取内部的Async执行器来执行
+         * 执行的结果是异步的(通过多线程执行),而不是0-9顺序的执行
+         */
+        for (int i=0;i<10;i++){
+            asyncTaskService.executeAsyncTask(i);
+            asyncTaskService.executeAsyncTaskPlus(i);
+        }
+        context.close();
+    }
+}
+```
+**结果展示**
+```
+执行异步任务+1：1
+执行异步任务：1
+执行异步任务+1：2
+执行异步任务：3
+执行异步任务+1：3
+执行异步任务：0
+执行异步任务：2
+执行异步任务：5
+执行异步任务+1：5
+执行异步任务：4
+执行异步任务+1：4
+执行异步任务：7
+执行异步任务+1：7
+执行异步任务：6
+执行异步任务+1：6
+执行异步任务：9
+执行异步任务+1：9
+执行异步任务：8
+执行异步任务+1：8
+执行异步任务+1：10
+```
+
+## 计划任务
