@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demo-springboot-sample</artifactId>
-
+    <packaging>jar</packaging>
 
     <properties>
         <aspect.version>1.8.5</aspect.version>
