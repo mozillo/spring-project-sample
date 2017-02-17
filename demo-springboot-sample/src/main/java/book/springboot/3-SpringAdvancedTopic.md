@@ -112,3 +112,78 @@ public class ExecutorConfig implements AsyncConfigurer {
 ```
 
 ## 计划任务
+现在使用注解就可以使用Spring的计划任务模块, 代替之前复杂繁琐的quartz整合
+```java
+@Service
+public class SchedulerService {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    
+    @Scheduled(fixedRate = 5000)
+    public void reportCurrentTime(){System.out.println("每5秒执行,当前时间:"+sdf.format(new Date()));}
+
+    @Scheduled(cron = "0 08 17 ? * *")
+    public void fixedTimeExecution(){System.out.println("定时执行:"+sdf.format(new Date()));}
+}
+```
+```java
+@Configuration
+@ComponentScan("demo.springboot.taskscheduler")
+@EnableScheduling //注解开启计划任务
+public class SchedulerConfig {
+    public static void main(String[] args){
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SchedulerConfig.class);
+    }
+}
+```
+
+## 条件注解
+根据条件操控Bean, 比profile更通用, 可以定义在程序内方便理解
+* 设置条件, 实现条件实现的函数
+```java
+public class WindowsCondition implements Condition {
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        return context.getEnvironment().getProperty("os.name").contains("Windows");
+    }
+}
+
+public class LinuxCondition implements Condition {
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        return context.getEnvironment().getProperty("os.name").contains("Linux");
+    }
+}
+```
+* 设置Bean的不同实现
+```java
+public class WindowsServiceImpl implements ListService {
+    @Override
+    public String showListCmd() { return "dir"; }
+}
+public class LinuxServiceImpl implements ListService {
+    @Override
+    public String showListCmd() { return "ls"; }
+}
+```
+* 设置Bean的加载条件
+```java
+@Configuration
+public class ConditionalConfig {
+
+    @Bean
+    @Conditional(WindowsCondition.class)
+    public ListService windowsList() { return new WindowsServiceImpl(); }
+
+    @Bean
+    @Conditional(LinuxCondition.class)
+    public ListService linuxList() { return new LinuxServiceImpl(); }
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConditionalConfig.class);
+        ListService listService = context.getBean(ListService.class);
+        System.out.println("查看系统列表的命令是:" + listService.showListCmd());
+    }
+}
+```
+
+## 组合注解和元注解
