@@ -2,6 +2,7 @@ package anddd7.springboot;
 
 import anddd7.springboot.configuration.MapperScannerConfiguration;
 import anddd7.springboot.configuration.MyBatisConfiguration;
+import anddd7.springboot.configuration.SwaggerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
@@ -24,7 +25,7 @@ import org.springframework.context.annotation.Import;
  * -    @ConditionalOnMissingBean说明Spring Boot仅仅在当前上下文中不存在Mongo对象时，才会实例化一个Bean
  */
 
-@Import({MyBatisConfiguration.class, MapperScannerConfiguration.class})
+@Import({MyBatisConfiguration.class, SwaggerConfiguration.class, MapperScannerConfiguration.class})
 @SpringBootApplication
 public class Application {
 
