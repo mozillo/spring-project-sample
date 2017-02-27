@@ -46,21 +46,28 @@
 
     <!-- 对应模块的starter包含常用依赖 ,例如starter-web{spring-web,spring-mvc}-->
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>${spring-boot.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-
     </dependencies>
+
+    <!-- 管理springboot相关依赖的版本 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -74,7 +81,7 @@
                 </configuration>
             </plugin>
 
-           <!-- 用于将项目打包成fat jar（executable jar）-->
+            <!-- 用于将项目打包成fat jar（executable jar）-->
             <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

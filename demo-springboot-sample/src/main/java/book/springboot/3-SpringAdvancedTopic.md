@@ -1,5 +1,6 @@
 ## Spring Aware
 通常@Component标识的Bean由容器所管理，但它自身是不能和容器交互的（解耦），你只能通过@Autowired引入并使用。而Aware接口为Bean提供了与容器交互的能力。
+
 * BeanNameAware：获取容器中Bean的名称
 * BeanFactoryAware：获取当前Bean的Factory，从而调用容器的服务
 * MessagerSourceAware：获取文本信息
@@ -187,3 +188,120 @@ public class ConditionalConfig {
 ```
 
 ## 组合注解和元注解
+自定义注解组合常用的注解(类似 继承/组合)
+```java
+@Target(ElementType.TYPE)/* Class, interface (including annotation type), or enum declaration */
+@Retention(RetentionPolicy.RUNTIME)/* 保留至运行时 ,运行时可以检测到这个注解 */
+@Documented/* 被javadoc记录 */
+ /* 组合注解类似继承 ,可以使用同名函数(属性) 覆盖 被组合的注解中的函数(属性) */
+@Configuration
+@ComponentScan
+public @interface CommonConfiguration {
+    String[] value() default {};
+}
+```
+使用组合注解
+```java
+@CommonConfiguration("demo.springboot.annotation")
+public class DemoConfig {
+    //...
+}
+```
+
+## @Enable*注解的原理
+常用的注解
+```java
+@org.springframework.context.annotation.EnableAspectJAutoProxy //aspectj支持
+@org.springframework.scheduling.annotation.EnableAsync //开启异步方法
+@org.springframework.web.servlet.config.annotation.EnableWebMvc //开启Mvc配置
+@org.springframework.boot.context.properties.EnableConfigurationProperties //开启注解配置bean
+@org.springframework.cache.annotation.EnableCaching //开启注解式缓存
+@org.springframework.scheduling.annotation.EnableScheduling //开启计划任务
+
+@EnableJpaRepositories //开启JPA支持
+@org.springframework.transaction.annotation.EnableTransactionManagement //开启注解事务
+```
+原理解析
+* 引入配置类@EnableScheduling
+```java
+//注解
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(SchedulingConfiguration.class)/* 引入配置类 */
+@Documented
+public @interface EnableScheduling {
+
+}
+
+// 配置类 ,定义了一个bean(等效于 xml中的<bean .../>)
+@Configuration
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+public class SchedulingConfiguration {
+	@Bean(name = TaskManagementConfigUtils.SCHEDULED_ANNOTATION_PROCESSOR_BEAN_NAME)
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public ScheduledAnnotationBeanPostProcessor scheduledAnnotationProcessor() {
+		return new ScheduledAnnotationBeanPostProcessor();
+	}
+}
+```
+
+* 依据条件选择配置类@EnableAsync
+```java
+@Import(AsyncConfigurationSelector.class)
+public @interface EnableAsync {
+    //...
+}
+
+//配置类
+public class AsyncConfigurationSelector extends AdviceModeImportSelector<EnableAsync> {
+    //...
+	public String[] selectImports(AdviceMode adviceMode) {
+		switch (adviceMode) {
+			case PROXY:
+				return new String[] { ProxyAsyncConfiguration.class.getName() };
+			case ASPECTJ:
+				return new String[] { ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME };
+			default:
+				return null;
+		}
+	}
+	 //...
+}
+```
+* 动态注册Bean@EnableAspectJAutoProxy
+```java
+@Import(AspectJAutoProxyRegistrar.class)
+public @interface EnableAspectJAutoProxy {
+    //...
+}
+
+class AspectJAutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
+
+	@Override
+	public void registerBeanDefinitions(
+	        AnnotationMetadata importingClassMetadata,  // 获取配置类的注解
+	        BeanDefinitionRegistry registry //注册bean
+	) {
+	    //...
+		}
+}
+```
+
+## 测试
+**手动导入`spring-test`或者`spring-boot-starter-test`**
+```java
+@RunWith(SpringJUnit4ClassRunner.class) //包含需要启动的spring容器
+@ContextConfiguration(classes = {DemoConfig.class}) //需要包含的配置
+
+@ActiveProfiles("dev") //配合profile使用
+public class DemoBeansIntegrationTests {
+    @Autowired
+    private DemoBean demoBean;
+
+    @Test //测试用例
+    public void contentTest() {
+        String content = demoBean.getContent();
+        Assert.assertEquals(content, "register from dev");
+    }
+}
+```

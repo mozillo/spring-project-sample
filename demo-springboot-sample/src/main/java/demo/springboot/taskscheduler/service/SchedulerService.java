@@ -16,7 +16,7 @@ public class SchedulerService {
     }
 
 
-    @Scheduled(cron = "0 08 17 ? * *")
+    @Scheduled(cron = "0 0/5 * * * ? ")
     public void fixedTimeExecution(){
         System.out.println("定时执行:"+sdf.format(new Date()));
     }
