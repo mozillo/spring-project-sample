@@ -106,10 +106,112 @@ SpringBoot(-web)有自带的Tomcat ,先排除再关联Servlet3.0需要的包
 
 ## SpringMvc常用注解
 * `@Controller` 声明控制器Bean ,容器的DispatcherServlet会把控制器和url绑定
-* `@RequestMapping` 指定访问路径
+* `@RequestMapping` 指定访问路径 ,`produces`可指定返回资源的类型
 * `@ResponseBody` 支持返回值放在response内 ,用于AJAX返回数据而非页面
 * `@RequestBody` 允许参数在request内 ,通常处理POST体
 * `@PathVarible` 接受路径中的参数 ,例如: `/user/add/10002` -> ( `/user/add/{id}` ) -> id=10002
 * `@RestController` 等效 `@Controller + @ResponseBody`
+```java
+@Controller
+@RequestMapping("/user")
+public class UserController {
 
+    @RequestMapping(produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String index(HttpServletRequest request) {
+        return "url:" + request.getRequestURL() + "can access";
+    }
 
+    @RequestMapping(value = "/login/{userId}", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String demoLogin(@PathVariable Integer userId, HttpServletRequest request) {
+        return "url:" + request.getRequestURL() + "can access , id is :" + userId;
+    }
+
+    @RequestMapping(value = "/register", produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String demoRegister(UserBean user, HttpServletRequest request) {
+        return "url:" + request.getRequestURL() + "can access , User:[" + user.getId() + "," + user.getName() + "]";
+    }
+
+    @RequestMapping(value = {"/name1", "/name2"}, produces = "application/xml;charset=UTF-8")
+    @ResponseBody
+    public String demoMultiPath(HttpServletRequest request) {
+        return "url:" + request.getRequestURL() + "can access";
+    }
+}
+```
+
+## MVC基本配置
+
+* `DispatcherServlet`通常拦截所有URL ,而静态资源 js/html/css 需要直接访问 ,需要对Mvc进行配置
+    * 静态资源放置在`resources`(根目录)下 
+    * 配置类继承`WebMvcConfigurerAdapter`
+    * 添加静态资源路径 ,覆盖`addResourceHandlers(ResourceHandlerRegistry registry)`方法
+
+```java
+public class MvcConfig extends WebMvcConfigurerAdapter {
+    
+    //...
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+    }
+}
+```
+
+* 拦截器配置
+    * 实现`HandlerInterceptor`接口 或者 继承`HandlerInterceptorAdapter`类 ,实现自定义拦截器
+    * 在`WebMvcConfigurerAdapter`中添加interceptor
+```java
+public class DemoInterceptor extends HandlerInterceptorAdapter {
+    
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception { return true; }
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {}
+}
+
+public class MvcConfig extends WebMvcConfigurerAdapter {
+   
+    //...
+   @Bean
+   public DemoInterceptor demoInterceptor() {
+       return new DemoInterceptor();
+   }
+   @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+      registry.addInterceptor(demoInterceptor());
+    }
+}
+```
+
+* ControllerAdvice - 控制器行为总控 (类似AOP)
+    * 使用`@ControllerAdvice`注解一个类
+    * 注解ControllerAdvice类中的方法 ,对所有`@RequesMapping`的方法生效
+```java
+@ControllerAdvice //注解启动了一个总控的Controller ,里面的方法会应用到所有@RequestMapping方法 ,并根据注解的不同产生不同作用
+public class DemoControllerAdvice {
+
+    @ModelAttribute //在目标方法执行前 , 产生一个对象 , 并setAttribute
+    public UserBean addAttribute() {
+        System.out.println("============应用到所有@RequestMapping注解方法，在其执行之前把返回值放入Model");
+        return new UserBean(1, "admin");
+    }
+
+    @InitBinder // 针对WebDataBinder的预处理
+    public void initBinder(WebDataBinder binder) {
+        System.out.println("============应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
+    }
+
+    @ExceptionHandler(NoClassDefFoundError.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ModelAndView handleException(WebRequest request, NoClassDefFoundError e) {
+        System.out.println("===========应用到所有@RequestMapping注解的方法，在其抛出NoClassDefFoundError异常时执行");
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("errorMsg", e.getMessage());
+        return modelAndView;
+    }
+}
+```
+        

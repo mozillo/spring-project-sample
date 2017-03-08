@@ -1,8 +1,16 @@
-package demo2.springboot.mvc.demain;
+package demo2.springboot.mvc.domain;
 
 public class UserBean {
     Integer id;
     String name;
+
+    public UserBean() {
+    }
+
+    public UserBean(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
