@@ -22,9 +22,9 @@ public class DemoControllerAdvice {
         System.out.println("============应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器");
     }
 
-    @ExceptionHandler(NoClassDefFoundError.class)
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ModelAndView handleException(WebRequest request, NoClassDefFoundError e) {
+    public ModelAndView handleException(WebRequest request, Exception e) {
         System.out.println("===========应用到所有@RequestMapping注解的方法，在其抛出NoClassDefFoundError异常时执行");
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("errorMsg", e.getMessage());

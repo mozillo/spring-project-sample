@@ -214,4 +214,14 @@ public class DemoControllerAdvice {
     }
 }
 ```
-        
+
+* 路径参数默认忽略"."后的 ,例如 /user/{xx.yy} ,接收到的只有 xx , 需要在Mvc配置中手动关闭
+```java
+public class MvcConfig extends WebMvcConfigurerAdapter {
+    //...
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.setUseRegisteredSuffixPatternMatch(false);
+    }
+}
+```
