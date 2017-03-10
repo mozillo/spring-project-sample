@@ -13,7 +13,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <commonsio.version>2.3</commonsio.version>
+          <commonsfileupload.version>1.3.2</commonsfileupload.version>
     </properties>
 
     <dependencies>
@@ -45,12 +45,14 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+        <!-- 文件上传 ,包含 io -->
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commonsio.version}</version>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commonsfileupload.version}</version>
         </dependency>
 
+        <!-- 测试工具 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

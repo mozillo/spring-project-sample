@@ -4,11 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloController {
-
+public class PageController {
     @RequestMapping("/index")
-    public String hello() {
-        System.out.println("进入controller");
+    public String index() {
         return "index";
     }
+
+    @RequestMapping("/upload")
+    public String upload() {
+        return "upload";
+    }
+
 }

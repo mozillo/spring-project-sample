@@ -18,6 +18,8 @@
 <a href="/rest/getJson">getJson</a><br>
 <a href="/rest/getXml">getXml</a><br>
 
+<a href="/upload">Upload</a><br>
+
 </body>
 <script src="../assets/lib/jquery.min.js"></script>
 <script src="../assets/js/index.js"></script>

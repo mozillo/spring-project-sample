@@ -1,4 +1,4 @@
-package demo2.springboot.mvc.controller;
+package demo2.springboot.mvc.config;
 
 import demo2.springboot.mvc.domain.UserBean;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @ControllerAdvice //注解启动了一个总控的Controller ,里面的方法会应用到所有@RequestMapping方法 ,并根据注解的不同产生不同作用
-public class DemoControllerAdvice {
+public class MyControllerAdvice {
 
     @ModelAttribute //在目标方法执行前 , 产生一个对象 , 并setAttribute
     public UserBean addAttribute() {

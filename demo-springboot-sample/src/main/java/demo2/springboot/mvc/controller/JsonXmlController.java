@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/rest")
-public class DemoRestController {
+public class JsonXmlController {
 
     @RequestMapping(value = "/getJson", produces = "application/json;charset=UTF-8")
     public UserBean getJson(HttpServletRequest request) {
