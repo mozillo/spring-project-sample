@@ -1,6 +1,6 @@
 package demo2.springboot.mvc.config;
 
-import demo2.springboot.mvc.interceptor.DemoInterceptor;
+import demo2.springboot.mvc.interceptor.LogTimeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc //开启一些默认配置MessageConverters,ViewResolvers等
 @ComponentScan("demo2.springboot.mvc")
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class SpringMVCConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 注册视图转换器 ,为mvc返回的页面路径添加前后缀
@@ -31,8 +31,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
      * 注册拦截器
      */
     @Bean
-    public DemoInterceptor demoInterceptor() {
-        return new DemoInterceptor();
+    public LogTimeInterceptor demoInterceptor() {
+        return new LogTimeInterceptor();
     }
 
     @Override

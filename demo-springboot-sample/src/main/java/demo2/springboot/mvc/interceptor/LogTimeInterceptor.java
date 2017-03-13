@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * spring 拦截器
  */
-public class DemoInterceptor extends HandlerInterceptorAdapter {
+public class LogTimeInterceptor extends HandlerInterceptorAdapter {
     static final String START_TIME = "START_TIME";
 
     @Override
