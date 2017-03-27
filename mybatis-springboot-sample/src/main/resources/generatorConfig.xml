@@ -36,10 +36,10 @@
         </javaClientGenerator>
 
 
-        <table tableName="sys_user_login" domainObjectName="SysUserLogin" enableCountByExample="false"
+        <table tableName="marking_activity_info" domainObjectName="IOPActivityInfo" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
-        <table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false"
+        <table tableName="marking_campaign_info" domainObjectName="IOPCampaignInfo" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
 
