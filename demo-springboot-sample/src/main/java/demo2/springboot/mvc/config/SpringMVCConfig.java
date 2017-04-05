@@ -4,6 +4,7 @@ import demo2.springboot.mvc.interceptor.LogTimeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc //开启一些默认配置MessageConverters,ViewResolvers等
+@EnableScheduling//开启定时任务
 @ComponentScan("demo2.springboot.mvc")
 public class SpringMVCConfig extends WebMvcConfigurerAdapter {
 

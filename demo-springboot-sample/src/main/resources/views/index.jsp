@@ -18,7 +18,9 @@
 <a href="/rest/getJson">getJson</a><br>
 <a href="/rest/getXml">getXml</a><br>
 
-<a href="/upload">Upload</a><br>
+<a href="/pages/upload">Upload</a><br>
+<a href="/pages/sse">SSE</a><br>
+<a href="/pages/async">Async</a><br>
 
 </body>
 <script src="../assets/lib/jquery.min.js"></script>

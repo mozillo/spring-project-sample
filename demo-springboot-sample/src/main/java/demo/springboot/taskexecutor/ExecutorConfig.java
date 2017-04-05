@@ -42,6 +42,7 @@ public class ExecutorConfig implements AsyncConfigurer {
             asyncTaskService.executeAsyncTask(i);
             asyncTaskService.executeAsyncTaskPlus(i);
         }
+        System.out.println("主线程结束~");
         context.close();
     }
 }

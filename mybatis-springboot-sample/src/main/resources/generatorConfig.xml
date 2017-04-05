@@ -3,6 +3,9 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
+
+    <properties resource="prop.properties"></properties>
+
     <!-- 数据库驱动-->
     <classPathEntry
             location="C:\Users\38189\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
@@ -13,7 +16,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/testdb"
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="jdbc:mysql://localhost:3306/testdb"
                         userId="root" password="root">
         </jdbcConnection>
         <javaTypeResolver>
@@ -37,9 +40,6 @@
 
 
         <table tableName="marking_activity_info" domainObjectName="IOPActivityInfo" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"></table>
-        <table tableName="marking_campaign_info" domainObjectName="IOPCampaignInfo" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"></table>
 

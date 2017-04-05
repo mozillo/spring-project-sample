@@ -12,6 +12,13 @@ public class SSEController {
     @ResponseBody
     public String push() {
         Random r = new Random();
-        return null;
+        try{
+            Thread.sleep(5000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "data:Testing 1,2,3"+r.nextInt()+"\n\n";
     }
+
+
 }
