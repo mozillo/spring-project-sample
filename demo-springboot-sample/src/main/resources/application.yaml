@@ -1,0 +1,9 @@
+server:
+  port: 8080
+  address: 127.0.0.1
+  sessionTimeout: 30
+  contextPath: /boot
+
+author:
+  name: anddd7
+  qq: 381895099

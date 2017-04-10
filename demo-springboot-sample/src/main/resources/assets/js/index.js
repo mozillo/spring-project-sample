@@ -1,4 +1,4 @@
-$('#registerBtn').click(register);
+$('.registerBtn').click(register);
 
 function register() {
     $.ajax({
@@ -10,5 +10,5 @@ function register() {
         success: function (res) {
             alert(res);
         }
-    })
+    });
 }
