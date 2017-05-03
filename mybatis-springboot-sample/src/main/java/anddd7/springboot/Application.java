@@ -25,7 +25,9 @@ import org.springframework.context.annotation.Import;
  * -    @ConditionalOnMissingBean说明Spring Boot仅仅在当前上下文中不存在Mongo对象时，才会实例化一个Bean
  */
 
-@Import({MyBatisConfiguration.class, SwaggerConfiguration.class, MapperScannerConfiguration.class})
+@Import({MyBatisConfiguration.class,
+        SwaggerConfiguration.class,
+        MapperScannerConfiguration.class})
 @SpringBootApplication
 public class Application {
 

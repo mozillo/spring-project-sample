@@ -1,7 +1,8 @@
-package anddd7.springboot.service;
+package anddd7.springboot.service.impl;
 
 import anddd7.springboot.dao.SysUserMapper;
 import anddd7.springboot.domain.SysUser;
+import anddd7.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

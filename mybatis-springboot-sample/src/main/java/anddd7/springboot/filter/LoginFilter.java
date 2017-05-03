@@ -8,9 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class LoginFilter implements Filter {
     private static final Logger logger = Logger.getLogger(LoginFilter.class);
+
+    private static List<String> excludePath = Arrays.asList("login", "register", "oraclejet");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,8 +35,8 @@ public class LoginFilter implements Filter {
                         url)
         );
 
-        //访问的不是登录页面 进行校验
-        if (!url.contains("login") && !url.contains("register")) {
+        //访问的不在排出路径内
+        if (excludePath.stream().noneMatch(p -> url.contains(p))) {
             //获取登录用户
             HttpSession session = request.getSession(true);
             Object user = session.getAttribute(GlobalParm.USER_SESSION_KEY);

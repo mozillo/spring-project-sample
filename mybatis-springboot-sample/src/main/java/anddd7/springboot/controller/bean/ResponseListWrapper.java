@@ -4,21 +4,21 @@ package anddd7.springboot.controller.bean;
 import java.util.List;
 
 public class ResponseListWrapper<T> {
-    Integer totalCount;
-    Integer currentCount;
+    Long totalCount;
+    Long currentCount;
     List<T> objs;
 
-    public ResponseListWrapper(Integer totalCount, List<T> objs) {
+    public ResponseListWrapper(Long totalCount, List<T> objs) {
         this.totalCount = totalCount;
         this.objs = objs;
-        this.currentCount = objs.size();
+        this.currentCount = Long.valueOf(objs.size());
     }
 
-    public Integer getTotalCount() {
+    public Long getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(Integer totalCount) {
+    public void setTotalCount(Long totalCount) {
         this.totalCount = totalCount;
     }
 
@@ -28,6 +28,6 @@ public class ResponseListWrapper<T> {
 
     public void setObjs(List<T> objs) {
         this.objs = objs;
-        this.currentCount = objs.size();
+        this.currentCount = Long.valueOf(objs.size());
     }
 }

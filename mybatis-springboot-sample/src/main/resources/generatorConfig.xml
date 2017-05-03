@@ -8,7 +8,7 @@
 
     <!-- 数据库驱动-->
     <classPathEntry
-            location="C:\Users\38189\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
+            location="C:\Users\edliao\.m2\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="true"/>
@@ -16,7 +16,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="jdbc:mysql://localhost:3306/testdb"
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
                         userId="root" password="root">
         </jdbcConnection>
         <javaTypeResolver>
@@ -39,9 +39,14 @@
         </javaClientGenerator>
 
 
-        <table tableName="marking_activity_info" domainObjectName="IOPActivityInfo" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false"></table>
+        <table tableName="message_info" domainObjectName="Message"
+
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               selectByExampleQueryId="false"
+               enableSelectByExample="false"
+        />
 
 
     </context>

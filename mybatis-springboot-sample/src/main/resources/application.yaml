@@ -5,10 +5,10 @@
 
 # 服务器设置
 server:
-  port: 8080
+  port: 9999
   address: 127.0.0.1
   sessionTimeout: 30
-  contextPath: /testboot
+  contextPath: /RestServer
 
   # 内置tomcat设置
 tomcat:

@@ -46,7 +46,7 @@ public class UserController {
         }
         List<SysUser> users = userService.selectUserByCond(user, (pageNum - 1) * pageSize, pageSize);
 
-        ResponseListWrapper<SysUser> listWrapper = new ResponseListWrapper(totalCount,users);
+        ResponseListWrapper<SysUser> listWrapper = new ResponseListWrapper(Long.valueOf(totalCount),users);
 
         return new ResponseWrapper<>(ResponseEnum.success, listWrapper);
     }
