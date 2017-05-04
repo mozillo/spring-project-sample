@@ -27,7 +27,7 @@
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="anddd7.springboot" level="DEBUG"/>
 
-    <root level="ERROR">
+    <root level="DEBUG">
         <appender-ref ref="stdout"/>
         <appender-ref ref="logfile"/>
     </root>

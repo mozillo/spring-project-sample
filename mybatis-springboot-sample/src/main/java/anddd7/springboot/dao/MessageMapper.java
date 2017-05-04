@@ -20,7 +20,6 @@ public interface MessageMapper {
     int updateByPrimaryKey(Message record);
 
     //
-
     List<Message> selectByExample(@Param("example") Message example, @Param("startIndex") Long startIndex, @Param("pageNum") Long pageNum);
 
     Long selectCountByExample(Message message);

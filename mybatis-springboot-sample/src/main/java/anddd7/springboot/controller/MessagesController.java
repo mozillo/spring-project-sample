@@ -5,21 +5,23 @@ import anddd7.springboot.controller.bean.ResponseListWrapper;
 import anddd7.springboot.controller.bean.ResponseWrapper;
 import anddd7.springboot.domain.Message;
 import anddd7.springboot.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Created by edliao on 2017/5/3.
  */
+
 @Controller
 @RequestMapping("/oraclejet/messages")
 public class MessagesController {
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     MessageService messageService;
@@ -27,7 +29,11 @@ public class MessagesController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    ResponseListWrapper getList(Long startIndex, Long pageNum) {
+    ResponseListWrapper getList(@RequestParam(name = "offset",required = false) Long startIndex,
+                                @RequestParam(name ="limit",required = false) Long pageNum) {
+        log.debug("\tEnter getList()\t|\t{}:{},{}:{}", "startIndex", startIndex, "pageNum", pageNum);
+
+
         List result = messageService.selectByExample(new Message(), startIndex, pageNum);
         Long resultCount = messageService.selectCountByExample(new Message());
 

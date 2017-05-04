@@ -23,39 +23,44 @@ public class TestControllerIntegrationTests {
     private MockMvc mockMvc;//模拟的mvc对象，使用MockMvcBuilders构造
 
     //测试时注入bean和各种模拟的部件
-    @Autowired private DemoService demoService;
-    @Autowired WebApplicationContext context;
-    @Autowired MockHttpSession session;
-    @Autowired MockHttpServletRequest request;
+    @Autowired
+    private DemoService demoService;
+    @Autowired
+    WebApplicationContext context;
+    @Autowired
+    MockHttpSession session;
+    @Autowired
+    MockHttpServletRequest request;
+
 
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                                      .build();
+                .build();
     }
 
     @Test
     public void testNormalController() throws Exception {
         //模拟发送请求
         mockMvc.perform(MockMvcRequestBuilders.get("/normal"))
-               //各种预期结果
-               .andExpect(MockMvcResultMatchers.status()
-                                               .isOk())
-               .andExpect(MockMvcResultMatchers.view()
-                                               .name("index"))
-               .andExpect(MockMvcResultMatchers.forwardedUrl("/WEB-INF/classes/views/index.jsp"))
-               .andExpect(MockMvcResultMatchers.model()
-                                               .attribute("msg", demoService.saySomething()));
+                //各种预期结果
+                .andExpect(MockMvcResultMatchers.status()
+                        .isOk())
+                .andExpect(MockMvcResultMatchers.view()
+                        .name("index"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("/WEB-INF/classes/views/index.jsp"))
+                .andExpect(MockMvcResultMatchers.model()
+                        .attribute("msg", demoService.saySomething()));
     }
 
     @Test
     public void testRestController() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/rest/testRest"))
-               .andExpect(MockMvcResultMatchers.status()
-                                               .isOk())
-               .andExpect(MockMvcResultMatchers.content()
-                                               .contentType("text/plain;charset=UTF-8"))
-               .andExpect(MockMvcResultMatchers.content()
-                                               .string(demoService.saySomething()));
+                .andExpect(MockMvcResultMatchers.status()
+                        .isOk())
+                .andExpect(MockMvcResultMatchers.content()
+                        .contentType("text/plain;charset=UTF-8"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(demoService.saySomething()));
     }
 }

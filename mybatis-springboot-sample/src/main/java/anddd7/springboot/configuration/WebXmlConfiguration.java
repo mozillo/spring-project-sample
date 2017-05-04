@@ -14,10 +14,6 @@ import javax.servlet.Filter;
  */
 public class WebXmlConfiguration {
 
-    @Bean(name = "LoginFilter")
-    public Filter getLoginFilter() {
-        return new LoginFilter();
-    }
 
     @Autowired
     DispatcherServlet dispatcherServlet;
@@ -34,6 +30,11 @@ public class WebXmlConfiguration {
     }
     */
 
+    @Bean(name = "LoginFilter")
+    public Filter getLoginFilter() {
+        return new LoginFilter();
+    }
+
     @Bean
     public FilterRegistrationBean loginFilterRegistration() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -42,6 +43,5 @@ public class WebXmlConfiguration {
         registrationBean.addUrlPatterns("*.html", "*.ajax");
         return registrationBean;
     }
-
 
 }
