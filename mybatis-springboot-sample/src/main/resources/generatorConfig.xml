@@ -39,7 +39,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="message_info" domainObjectName="Message"
+        <table tableName="id_sequence" domainObjectName=""
 
                enableDeleteByExample="false"
                enableCountByExample="false"

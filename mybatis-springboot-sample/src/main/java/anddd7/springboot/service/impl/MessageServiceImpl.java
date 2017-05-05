@@ -3,6 +3,7 @@ package anddd7.springboot.service.impl;
 import anddd7.springboot.dao.MessageMapper;
 import anddd7.springboot.domain.Message;
 import anddd7.springboot.service.MessageService;
+import anddd7.springboot.utils.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,13 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     MessageMapper mapper;
+    @Autowired
+    IdGenerator idGenerator;
+
 
     @Override
     public void save(Message message) {
+        message.setMsgId(BigDecimal.valueOf(idGenerator.calId("MESSAGE_INFO").current));
         mapper.insert(message);
     }
 

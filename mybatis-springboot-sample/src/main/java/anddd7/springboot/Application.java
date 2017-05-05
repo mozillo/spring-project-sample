@@ -5,6 +5,7 @@ import anddd7.springboot.configuration.MyBatisConfiguration;
 import anddd7.springboot.configuration.SwaggerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Import;
         SwaggerConfiguration.class,
         MapperScannerConfiguration.class})
 @SpringBootApplication
+@EnableCaching
 public class Application {
 
     public static void main(String[] args) {

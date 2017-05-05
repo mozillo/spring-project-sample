@@ -19,11 +19,11 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.remoting" level="WARN"/>
-    <logger name="org.springframework.scheduling.quartz" level="WARN"/>
-    <logger name="org.springframework.data.jpa" level="DEBUG"/>
-    <logger name="org.mybatis.spring" level="DEBUG"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.springframework.remoting" level="ERROR"/>
+    <logger name="org.springframework.scheduling.quartz" level="ERROR"/>
+    <logger name="org.springframework.data.jpa" level="ERROR"/>
+    <logger name="org.mybatis.spring" level="ERROR"/>
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="anddd7.springboot" level="DEBUG"/>
 

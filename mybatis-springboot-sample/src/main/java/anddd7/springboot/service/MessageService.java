@@ -17,5 +17,6 @@ public interface MessageService {
     Message selectByPrimary(Long msgId);
 
     List<Message> selectByExample(Message message, Long startIndex, Long pageNum);
+
     Long selectCountByExample(Message message);
 }
