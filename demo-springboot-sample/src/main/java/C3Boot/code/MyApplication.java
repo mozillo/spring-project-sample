@@ -1,21 +1,23 @@
 package C3Boot.code;
 
-import C3Boot.code.config.AuthorSettings;
-import org.springframework.beans.factory.annotation.Autowired;
+import C3Boot.code.config.MVCConfig;
+import C3Boot.code.config.WebSecurityConfig;
+import C3Boot.code.config.WebSocketConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Import;
 
-@RestController
+
+@Import({MVCConfig.class,
+        WebSocketConfig.class,
+        //WebSecurityConfig.class
+        })
 @SpringBootApplication
 public class MyApplication {
-    @Autowired AuthorSettings authorSettings;
-
-    @RequestMapping("/author")
-    public String getAuthorInfo() {
-        return "author name is " + authorSettings.getName() + " and qq is " + authorSettings.getQq();
-    }
+//    @Bean
+//    public ServletRegistrationBean servletRegistrationBean() {
+//        return new ServletRegistrationBean(new DefaultServlet(), "*.html");// ServletName默认值为首字母小写，即myServlet
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(MyApplication.class, args);

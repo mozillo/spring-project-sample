@@ -18,7 +18,7 @@ public class PageController {
     }
 
     @RequestMapping("/pages/{pageName}")
-    public String getPages(@PathVariable String pageName) {
+    public String getPages(@PathVariable("pageName") String pageName) {
         return pageName;
     }
 

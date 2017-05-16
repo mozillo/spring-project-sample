@@ -6,4 +6,16 @@ SpringBoot提供了`spring-boot-starter-web`支持web开发，里面包括自动
 
 现在AJAX+SpringMVC会更简易灵活一些
 
-###
+
+### WebSocket
+```java
+ @MessageMapping("/welcome")
+ @SendTo("/topic/getResponse")
+ public TransResponse say(TransRequest msg) throws Exception{
+    Thread.sleep(3*1000);
+    return new TransResponse("Welcome,"+msg.getName()+"!");
+}
+```
+页面通过`sockjs+stomp`连接到WebSocket :
+订阅者通过`@SendTo("/topic/getResponse")`订阅主题(方法) ; 发布者通过`@MessageMapping("/welcome")`发布消息(执行方法).
+
