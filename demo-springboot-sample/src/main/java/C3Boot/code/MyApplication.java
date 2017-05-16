@@ -1,7 +1,6 @@
 package C3Boot.code;
 
 import C3Boot.code.config.MVCConfig;
-import C3Boot.code.config.WebSecurityConfig;
 import C3Boot.code.config.WebSocketConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,9 +8,8 @@ import org.springframework.context.annotation.Import;
 
 
 @Import({MVCConfig.class,
-        WebSocketConfig.class,
-        //WebSecurityConfig.class
-        })
+        WebSocketConfig.class
+})
 @SpringBootApplication
 public class MyApplication {
 //    @Bean
