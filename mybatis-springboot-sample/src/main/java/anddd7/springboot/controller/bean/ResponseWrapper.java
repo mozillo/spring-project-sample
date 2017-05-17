@@ -1,6 +1,6 @@
 package anddd7.springboot.controller.bean;
 
-import anddd7.springboot.common.ResponseEnum;
+import anddd7.springboot.controller.common.ResponseEnum;
 
 public class ResponseWrapper<T> {
     Integer resultCode;

@@ -1,4 +1,4 @@
-package anddd7.springboot.common;
+package anddd7.springboot.controller.common;
 
 /**
  * 全局静态参数

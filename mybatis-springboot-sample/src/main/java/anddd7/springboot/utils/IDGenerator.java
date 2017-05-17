@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @CacheConfig(cacheNames = "idCache")
-public class IdGenerator {
+public class IDGenerator {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired

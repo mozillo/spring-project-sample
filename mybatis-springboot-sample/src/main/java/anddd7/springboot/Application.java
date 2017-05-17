@@ -1,8 +1,6 @@
 package anddd7.springboot;
 
-import anddd7.springboot.configuration.MapperScannerConfiguration;
-import anddd7.springboot.configuration.MyBatisConfiguration;
-import anddd7.springboot.configuration.SwaggerConfiguration;
+import anddd7.springboot.configuration.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -28,7 +26,9 @@ import org.springframework.context.annotation.Import;
 
 @Import({MyBatisConfiguration.class,
         SwaggerConfiguration.class,
-        MapperScannerConfiguration.class})
+        MapperScannerConfiguration.class,
+        MVCConfiguration.class
+})
 @SpringBootApplication
 @EnableCaching
 public class Application {

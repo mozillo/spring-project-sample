@@ -5,6 +5,7 @@ import anddd7.springboot.filter.LoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.Filter;
@@ -12,6 +13,7 @@ import javax.servlet.Filter;
 /**
  * 对应web.xml中的所有设置
  */
+@Configuration
 public class WebXmlConfiguration {
 
 
@@ -40,7 +42,7 @@ public class WebXmlConfiguration {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(getLoginFilter());
         registrationBean.setName("LoginFilter");
-        registrationBean.addUrlPatterns("*.html", "*.ajax");
+        registrationBean.addUrlPatterns("/*");
         return registrationBean;
     }
 

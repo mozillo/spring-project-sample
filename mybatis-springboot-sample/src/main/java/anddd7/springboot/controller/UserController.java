@@ -1,6 +1,6 @@
 package anddd7.springboot.controller;
 
-import anddd7.springboot.common.ResponseEnum;
+import anddd7.springboot.controller.common.ResponseEnum;
 import anddd7.springboot.controller.bean.ResponseListWrapper;
 import anddd7.springboot.controller.bean.ResponseWrapper;
 import anddd7.springboot.domain.SysUser;

@@ -1,12 +1,11 @@
 package anddd7.springboot.controller;
 
-import anddd7.springboot.common.ResponseEnum;
 import anddd7.springboot.controller.bean.ResponseListWrapper;
 import anddd7.springboot.controller.bean.ResponseWrapper;
+import anddd7.springboot.controller.common.ResponseEnum;
 import anddd7.springboot.domain.Message;
 import anddd7.springboot.service.MessageService;
-import anddd7.springboot.utils.IdGenerator;
-import anddd7.springboot.utils.LogFormatter;
+import anddd7.springboot.utils.IDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +24,17 @@ import java.util.List;
 public class MessagesController {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
-    private LogFormatter logF = LogFormatter.getLog(this.getClass());
 
     @Autowired
     MessageService messageService;
     @Autowired
-    IdGenerator idGenerator;
+    IDGenerator idGenerator;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     ResponseListWrapper getList(@RequestParam(name = "offset", required = false) Long startIndex,
                                 @RequestParam(name = "limit", required = false) Long pageNum,
                                 @RequestParam(name = "fromID", required = false) Long fromID) {
-
-        logF.debugMethod("getList", "", startIndex, pageNum);
 
         if (fromID != null) {
             List result = new ArrayList();
@@ -71,8 +67,6 @@ public class MessagesController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     ResponseWrapper save(@RequestBody Message message) throws Exception {
-
-        logF.debugMethod("save", "", message);
 
         if (message.getMsgId() != null) {
             messageService.update(message);

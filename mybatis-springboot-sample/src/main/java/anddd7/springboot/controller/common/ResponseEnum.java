@@ -1,4 +1,4 @@
-package anddd7.springboot.common;
+package anddd7.springboot.controller.common;
 
 /**
  * Created by AnDong on 2017/2/17.
